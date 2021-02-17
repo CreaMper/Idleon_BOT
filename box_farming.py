@@ -7,4 +7,4 @@ from init import *
 
 # ustawienia
 mouse = Controller()
-choosen_char = "1"
+choosen_char = "5"
