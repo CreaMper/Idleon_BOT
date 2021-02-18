@@ -13,12 +13,12 @@ import PIL
 global starting_cords, click, found_coords
 
 global char1, char2, char3, char4, char5, login_start
-global afk_claim
-global map, items
+global afk_claim, chrome_clear_site_data, chrome_refresh, tutorial_login_button
+global map, items, attacks, menu, menu_swap_players, menu_swap_players_player_menu, attack_slot_1
 global eq_slotbar1, eq_slotbar2, eq_slotbar3, eq_slotbar4, eq_slotbar5
 global EFV_rope, EFV_przejscie_do_obolka, EFV_przejscie_do_amaroks_villa
 global amarok_enter, amarok_click_kill, amarok_loot_change_position, amarok_loot_left, amarok_loot_right
-
+global JB_spawn, JB_sprawn_loot_left, JB_sprawn_loot_right
 
 def check(target):
     dc = win32gui.GetDC(0)
@@ -44,13 +44,21 @@ def calculate_obj_in_view_position(x, y):
     login_start = (x + 924, y + 404)  # start
 
     # misc
-    global afk_claim
+    global afk_claim, chrome_clear_site_data, chrome_refresh, tutorial_login_button
     afk_claim = (x + 594, y + 294)  # click when afk gains shows up
+    chrome_clear_site_data = (1610, 497)
+    chrome_refresh = (86, 52)
+    tutorial_login_button = (x + 951, y + 30)
 
     # interface
-    global map, items
+    global map, items, attacks, menu, menu_swap_players, menu_swap_players_player_menu, attack_slot_1
     map = (x + 803, y + 528)  # mapa na pasku
     items = (x + 601, y + 523)
+    attacks = (x + 521, y + 525)
+    attack_slot_1 = (x + 597, y + 528)
+    menu = (x + 949, y + 524)
+    menu_swap_players = (x + 924, y + 340)
+    menu_swap_players_player_menu = (x + 285, y + 77)
 
     # eq #64
     global eq_slotbar1, eq_slotbar2, eq_slotbar3, eq_slotbar4, eq_slotbar5
@@ -74,6 +82,14 @@ def calculate_obj_in_view_position(x, y):
     EFV_przejscie_do_obolka = (x + 945, y + 249)  # nad linka -> obolki
     EFV_przejscie_do_amaroks_villa = (x + 973, y + 308)  # obolki -> amaroks_villa
 
+    # Jar bridge JB
+    global JB_spawn, JB_sprawn_loot_left, JB_sprawn_loot_right
+    JB_spawn = (x + 672, y + 351)
+    # 813,665 | 901, 670
+    JB_sprawn_loot_left = (x  +637, y + 350)
+    JB_sprawn_loot_right = (x  +725, y + 355)
+
+
 
 def check_screen(frame):
     # inicjalizacja
@@ -91,6 +107,11 @@ def check_screen(frame):
     amarok_boss_head = cv2.imread("rsc/amarok/amarok_head.png")
     amarok_boss_dead = cv2.imread("rsc/amarok/amarok_dead.png")
     amarok_key = cv2.imread("rsc/amarok/amarok_key.png")
+    map_name_JB = cv2.imread("rsc/map_names/jar_bridge.png")
+    skills_present_on = cv2.imread("rsc/skills/present_on.png")
+    skills_present_off = cv2.imread("rsc/skills/present_off.png")
+    menu_bar_half = cv2.imread("rsc/menu_bar_half.png")
+    tutorial_log_in = cv2.imread("rsc/tutorial_log_in.png")
 
     # misc
     global click
@@ -130,6 +151,20 @@ def check_screen(frame):
         else:
             return 0
 
+    if frame == "jb":
+        if check_if_exist(map_name_JB) == 1:
+            return "JB"
+        else:
+            return 0
+
+    if frame == "skill_bar":
+        if check_if_exist(skills_present_on) == 1:
+            return "present_on"
+        elif check_if_exist(skills_present_off) == 1:
+            return "present_off"
+        else:
+            return 0
+
     if frame == "amarok":
         if check_if_exist(amarok_boss_head) == 1:
             return "amarok_boss_head"
@@ -144,6 +179,13 @@ def check_screen(frame):
         else:
             return 0
 
+    if frame == "interface":
+        if check_if_exist(menu_bar_half):
+            return "menu_bar_half"
+        if check_if_exist(tutorial_log_in):
+            return "tutorial_login"
+        else:
+            return 0
 
 # zbieranie infromacji
 while True:
