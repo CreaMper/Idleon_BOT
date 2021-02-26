@@ -15,6 +15,7 @@ def box_farming(iterations):
     laczny_czas = 0
     for i in range(iterations):
         start = time.time()
+        time.sleep(2)
         # wybor postaci
         if check_screen("char_choose") == "char_select":
             print("Found character choosing screen")
@@ -46,13 +47,13 @@ def box_farming(iterations):
         temp = 1
         hardmode_2 = False
         while (True):
-            time.sleep(1)
+            time.sleep(2)
             if check_screen("interface") == "menu_bar_half":
                 print("Game screen loaded")
                 break
             print("Waiting for game screen to load! (" + str(temp) + ")")
             temp = temp + 1
-            if temp == 20:
+            if temp > 20:
                 print("Can't find game screen! Trying to fix it!")
                 hardmode_2 = True
                 break
