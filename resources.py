@@ -2,6 +2,7 @@ import numpy as np
 from PIL import ImageGrab
 import cv2
 from init import *
+
 global starting_cords, click, found_coords
 
 
@@ -15,6 +16,24 @@ def check_screen(frame):
 
     # Settings and misc
     threshold = .85
+
+    # Function that check if theres an targeted obj in frame
+    global click
+    threshold = .85
+    click = (0, 0)
+
+    def check_if_exist(resource):
+        global click
+        click = None
+        res = cv2.matchTemplate(screenshot_cv2, resource, cv2.TM_CCOEFF_NORMED)
+        loc = np.where(res >= threshold)
+        for pt in zip(*loc[::-1]):
+            cv2.rectangle(screenshot_cv2, pt, (pt[0] + 30, pt[1] + 30), (0, 0, 255), 2)
+            click = pt[0], pt[1]
+        if click is None:
+            return False
+        else:
+            return True
 
     # RSC loading -----------------------------------------------------------------
     # INTERFACE
@@ -50,97 +69,71 @@ def check_screen(frame):
     # JAR BRIDGE
     rsc_loc_w2_jb_map_name = cv2.imread("resources/images/map_names/jar_bridge.png")
 
-    # Check frame for a resource
-    global click
-    threshold = .85
-    click = (0, 0)
+    # Checking for objects
+    # INTERFACE
+    if frame == "iface_afk_gain_button":
+        if check_if_exist(rsc_iface_afk_gain_button):
+            return frame
+    if frame == "iface_menu_bar_half":
+        if check_if_exist(rsc_iface_menu_bar_half):
+            return frame
+    if frame == "iface_menu_swap_players":
+        if check_if_exist(rsc_iface_menu_swap_players):
+            return frame
+    if frame == "iface_menu_swap_players_player_menu":
+        if check_if_exist(rsc_iface_menu_swap_players_player_menu):
+            return frame
 
-    def check_if_exist(resource):
-        global click
-        click = None
-        res = cv2.matchTemplate(screenshot_cv2, resource, cv2.TM_CCOEFF_NORMED)
-        loc = np.where(res >= threshold)
-        for pt in zip(*loc[::-1]):
-            cv2.rectangle(screenshot_cv2, pt, (pt[0] + 30, pt[1] + 30), (0, 0, 255), 2)
-            click = pt[0], pt[1]
-        if click is None:
-            return False
-        else:
-            return True
+    # SKILLS
+    if frame == "skill_present_on":
+        if check_if_exist(rsc_skill_present_on):
+            return frame
+    if frame == "skill_present_off":
+        if check_if_exist(rsc_skill_present_off):
+            return frame
 
-    # sprawdzenie widoków
-    if frame == "char_choose":
-        if check_if_exist(rsc_main_menu_play_button) == 1:  # wybór postaci
-            return "char_select"
-        elif check_if_exist(rsc_iface_afk_gain_button) == 1:
-            return "afk_gain_window"
-        elif check_if_exist(rsc_main_menu_main_stats) == 1:
-            return "main_stats"
-        else:
-            return 0
+    # MAIN MENU
+    if frame == "main_menu_play_button":
+        if check_if_exist(rsc_main_menu_play_button):
+            return frame
+    if frame == "main_menu_main_stats":
+        if check_if_exist(rsc_main_menu_main_stats):
+            return frame
+    if frame == "main_menu_tutorial_login":
+        if check_if_exist(rsc_main_menu_tutorial_login):
+            return frame
 
-    if frame == "main_stats":
-        if check_if_exist(rsc_main_menu_main_stats) == 1:
-            return "main_stats"
-        else:
-            return 0
+    # LOCATIONS
+    # WORLD 1
 
-    if frame == "evf":
-        if check_if_exist(rsc_loc_w1_efv_map_name) == 1:
-            return "EFV"
-        elif check_if_exist(rsc_loc_w1_av) == 1:
-            return "amarok_entrance"
-        else:
-            return 0
-
-    if frame == "jb":
-        if check_if_exist(rsc_loc_w2_jb_map_name) == 1:
-            return "JB"
-        else:
-            return 0
-
-    if frame == "skill_bar":
-        if check_if_exist(rsc_skill_present_on) == 1:
-            return "present_on"
-        elif check_if_exist(rsc_skill_present_off) == 1:
-            return "present_off"
-        else:
-            return 0
-
-    if frame == "amaroks_villa":
-        if check_if_exist(rsc_loc_w1_av_amarok_head) == 1:
-            return "amarok_boss_head"
-        else:
-            return 0
-
-    if frame == "amarok_2":
-        if check_if_exist(rsc_loc_w1_av_amarok_dead) == 1:
-            return "amarok_dead"
-        else:
-            return 0
-
-    if frame == "eq":
-        if check_if_exist(rsc_loc_w1_av_amarok_key) == 1:
-            return "amarok_key", click
+    # AMAROK'S VILLA
+    if frame == "loc_w1_av":
+        if check_if_exist(rsc_loc_w1_av):
+            return frame
+    if frame == "loc_w1_av_amarok_head":
+        if check_if_exist(rsc_loc_w1_av_amarok_head):
+            return frame
+    if frame == "loc_w1_av_amarok_dead":
+        if check_if_exist(rsc_loc_w1_av_amarok_dead):
+            return frame
+    if frame == "loc_w1_av_amarok_key":
+        if check_if_exist(rsc_loc_w1_av_amarok_key):
+            return frame, click
         else:
             return "0", "0"
 
-    if frame == "interface":
-        if check_if_exist(rsc_iface_menu_bar_half) == 1:
-            return "menu_bar_half"
-        if check_if_exist(rsc_main_menu_tutorial_login) == 1:
-            return "tutorial_login"
-        else:
-            return 0
+    # ENCROACHING FORES VILLAS
+    if frame == "loc_w1_efv_map_name":
+        if check_if_exist(rsc_loc_w1_efv_map_name):
+            return frame
+    if frame == "loc_w1_efv_upper_rope":
+        if check_if_exist(rsc_loc_w1_efv_upper_rope):
+            return frame
 
-    if frame == "reload":
-        if check_if_exist(rsc_iface_menu_swap_players_player_menu) == 1:
-            return "menu_swap_players_player_menu"
-        if check_if_exist(rsc_iface_menu_swap_players) == 1:
-            return "menu_swap_players"
-        else:
-            return 0
+    # WORLD 2
+    # JAR BRIDGE
+    if frame == "loc_w2_jb_map_name":
+        if check_if_exist(rsc_loc_w2_jb_map_name):
+            return frame
 
-    if frame == "efv_2":
-        if check_if_exist(rsc_loc_w1_efv_upper_rope) == 1:
-            return "efv_rope"
+    return False

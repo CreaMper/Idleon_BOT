@@ -7,27 +7,25 @@ from positions import *
 mouse = Controller()
 
 
-def check_if_frame_exists(cat, target, desc):
+def check_if_frame_exists(target, desc):
     """
-    :param cat:  which frame category we are looking for
     :param target: what element in that category we are looking for
     :param desc: description that will be printed after function ends
     """
-    if check_screen(cat) == target:
+    if check_screen(target) == target:
         print(desc + " Found!")
         return True
     else:
         exit(desc + " Not Found!")
 
 
-def check_if_frame_exists_optional(cat, target, desc):
+def check_if_frame_exists_optional(target, desc):
     """
-    :param cat:  which frame category we are looking for
     :param target: what element in that category we are looking for
     :param desc: description that will be printed after function ends
     :param return: returns true if  frame was found
     """
-    if check_screen(cat) == target:
+    if check_screen(target) == target:
         print(desc + "Found!")
         return True
     else:
@@ -59,7 +57,6 @@ def main_click_play():
     time.sleep(0.5)
     mouse.click(Button.left)
     time.sleep(0.5)
-    print("Play button clicked")
 
 
 def mouse_click(pos, button, delay):
@@ -124,9 +121,9 @@ def interface_eq_find_item(item, bags):
     mouse.position = (eq_slotbar1[0], eq_slotbar1[1])
     mouse.click(Button.left)
     time.sleep(1)
-    if check_screen("eq")[0] == item:
-        print("amarok_key" + "Found at slotbar 1")
-        cords = check_screen("eq")[1]
+    if check_screen(item)[0] == item:
+        print(item + "found at bag bar 1")
+        cords = check_screen(item)[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
     if bags == 1:
         return False
@@ -134,9 +131,9 @@ def interface_eq_find_item(item, bags):
     mouse.position = (eq_slotbar2[0], eq_slotbar2[1])
     mouse.click(Button.left)
     time.sleep(1)
-    if check_screen("eq")[0] == item:
-        print(item + "Found at slotbar 2")
-        cords = check_screen("eq")[1]
+    if check_screen(item)[0] == item:
+        print(item + "Found at bag bar 2")
+        cords = check_screen(item)[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
     if bags == 2:
         return False
@@ -144,9 +141,9 @@ def interface_eq_find_item(item, bags):
     mouse.position = (eq_slotbar3[0], eq_slotbar3[1])
     mouse.click(Button.left)
     time.sleep(1)
-    if check_screen("eq")[0] == item:
-        print(item + "Found at slotbar 3")
-        cords = check_screen("eq")[1]
+    if check_screen(item)[0] == item:
+        print(item + "Found at bag bar 3")
+        cords = check_screen(item)[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
     if bags == 3:
         return False
@@ -154,9 +151,9 @@ def interface_eq_find_item(item, bags):
     mouse.position = (eq_slotbar4[0], eq_slotbar4[1])
     mouse.click(Button.left)
     time.sleep(1)
-    if check_screen("eq")[0] == item:
-        print(item + "Found at slotbar 4")
-        cords = check_screen("eq")[1]
+    if check_screen(item)[0] == item:
+        print(item + "Found at bag bar 4")
+        cords = check_screen(item)[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
     if bags == 4:
         return False
@@ -164,9 +161,9 @@ def interface_eq_find_item(item, bags):
     mouse.position = (eq_slotbar5[0], eq_slotbar5[1])
     mouse.click(Button.left)
     time.sleep(1)
-    if check_screen("eq")[0] == item:
-        print(item + "Found at slotbar 5")
-        cords = check_screen("eq")[1]
+    if check_screen(item)[0] == item:
+        print(item + "Found at bag bar 5")
+        cords = check_screen(item)[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
 
     return False
@@ -188,7 +185,7 @@ def game_get_to_main_menu():
     mouse.click(Button.left)
 
     while True:
-        if check_screen("reload") == "menu_swap_players":
+        if check_screen("iface_menu_swap_players") == "iface_menu_swap_players":
             break
         time.sleep(0.5)
 
@@ -197,7 +194,7 @@ def game_get_to_main_menu():
     mouse.click(Button.left)
 
     while True:
-        if check_screen("reload") == "menu_swap_players_player_menu":
+        if check_screen("iface_menu_swap_players_player_menu") == "iface_menu_swap_players_player_menu":
             break
         time.sleep(0.5)
 
@@ -206,20 +203,19 @@ def game_get_to_main_menu():
     mouse.click(Button.left)
 
     while True:
-        if check_screen("char_choose") == "char_select":
+        if check_screen("main_menu_play_button") == "main_menu_play_button":
             break
         time.sleep(0.5)
 
 
-def misc_wait_for_frame(cat, target):
+def misc_wait_for_frame(target):
     """
-    :param cat: category of frames
     :param target: what to looking for
     :return:
     """
     while True:
-        print(check_screen(cat), cat, target)
-        if check_screen(cat) == target:
+        print("Looking for ", + target)
+        if check_screen(target) == target:
             break
         time.sleep(0.5)
 
@@ -239,13 +235,13 @@ def game_reset():
 
     tries = 0
     while True:
-        print(check_screen("interface"), "interface", "tutorial_login ", tries)
-        if check_screen("interface") == "tutorial_login":
+        print("Waiting for tutorial to load ( " + tries + " )")
+        if check_screen("main_menu_tutorial_login") == "main_menu_tutorial_login":
             break
         time.sleep(0.5)
         tries = tries + 1
         if tries > 55:
-            print("Something went wrong , reseting back")
+            print("Something went wrong , resetting back")
             return False
 
     time.sleep(1)  # loading offset
