@@ -214,6 +214,11 @@ def game_get_to_main_menu():
 
 
 def misc_wait_for_frame(cat, target):
+    """
+    :param cat: category of frames
+    :param target: what to looking for
+    :return:
+    """
     while True:
         print(check_screen(cat), cat, target)
         if check_screen(cat) == target:
@@ -241,7 +246,7 @@ def game_reset():
             break
         time.sleep(0.5)
         tries = tries + 1
-        if (tries > 55):
+        if tries > 55:
             print("Something went wrong , reseting back")
             return False
 
