@@ -31,6 +31,7 @@ elif choosen_char == "5":
 
 mouse.click(Button.left)
 time.sleep(0.5)
+
 mouse.position = (login_start[0], login_start[1])
 time.sleep(0.5)
 mouse.click(Button.left)

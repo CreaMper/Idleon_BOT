@@ -20,6 +20,7 @@ global EFV_rope, EFV_przejscie_do_obolka, EFV_przejscie_do_amaroks_villa
 global amarok_enter, amarok_click_kill, amarok_loot_change_position, amarok_loot_left, amarok_loot_right
 global JB_spawn, JB_sprawn_loot_left, JB_sprawn_loot_right
 
+#1025x850
 def check(target):
     dc = win32gui.GetDC(0)
     dcObj = win32ui.CreateDCFromHandle(dc)
@@ -112,10 +113,12 @@ def check_screen(frame):
     skills_present_off = cv2.imread("rsc/skills/present_off.png")
     menu_bar_half = cv2.imread("rsc/menu_bar_half.png")
     tutorial_log_in = cv2.imread("rsc/tutorial_log_in.png")
-
+    main_stats = cv2.imread("rsc/main_stats.png")
+    rsc_menu_swap_players = cv2.imread("rsc/menu_swap_players.png")
+    rsc_menu_swap_players_player_menu = cv2.imread("rsc/menu_swap_players_player_menu.png")
     # misc
     global click
-    threshold = .95
+    threshold = .90
     click = (0, 0)
 
     # funkcja sprawdzająca
@@ -140,6 +143,14 @@ def check_screen(frame):
             return "char_select"
         elif check_if_exist(afk_gain_button) == 1:
             return "afk_gain_window"
+        elif check_if_exist(main_stats) == 1:
+            return "main_stats"
+        else:
+            return 0
+
+    if frame == "main_stats":
+        if check_if_exist(main_stats) == 1:
+            return "main_stats"
         else:
             return 0
 
@@ -177,16 +188,23 @@ def check_screen(frame):
         if check_if_exist(amarok_key) == 1:
             return "amarok_key", click
         else:
-            return 0
+            return "0", "0"
 
     if frame == "interface":
-        if check_if_exist(menu_bar_half):
+        if check_if_exist(menu_bar_half) == 1:
             return "menu_bar_half"
-        if check_if_exist(tutorial_log_in):
+        if check_if_exist(tutorial_log_in) == 1:
             return "tutorial_login"
         else:
             return 0
 
+    if frame == "reload":
+        if check_if_exist(rsc_menu_swap_players_player_menu) == 1:
+            return "menu_swap_players_player_menu"
+        if check_if_exist(rsc_menu_swap_players) == 1:
+            return "menu_swap_players"
+        else:
+            return 0
 # zbieranie infromacji
 while True:
     try:

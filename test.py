@@ -4,18 +4,20 @@ from pynput import *
 from pynput.mouse import Controller, Button
 
 from init import *
+from moves import check_if_frame_exists, main_choose_char_slot, main_click_play, interface_eq_find_item, \
+    interface_eq_use_item, game_get_to_main_menu, misc_wait_for_frame
 
 mouse = Controller()
 #-------------------------
 
 
-temp = 1
-while (True):
-    time.sleep(1)
-    if check_screen("interface") == "menu_bar_half":
-        print("Game screen loaded")
-        break
-    print("Waiting for game screen to load! (" + str(temp) + ")")
-    temp = temp + 1
-    if temp == 20:
-        exit("Can't find game screen!")
+# sprawdz czy jest klucz w eq , zapisz jego kordy
+
+key = interface_eq_find_item("amarok_key")
+print(key)
+# uzyj przedmiotu
+if key != 0:
+    # użycie klucza
+    interface_eq_use_item(key)
+    # zapisywanie postępów
+    game_get_to_main_menu()
