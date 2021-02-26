@@ -116,9 +116,10 @@ def check_screen(frame):
     main_stats = cv2.imread("rsc/main_stats.png")
     rsc_menu_swap_players = cv2.imread("rsc/menu_swap_players.png")
     rsc_menu_swap_players_player_menu = cv2.imread("rsc/menu_swap_players_player_menu.png")
+    rsc_efv_rope = cv2.imread("rsc/ef_rope.png")
     # misc
     global click
-    threshold = .90
+    threshold = .85
     click = (0, 0)
 
     # funkcja sprawdzająca
@@ -179,7 +180,11 @@ def check_screen(frame):
     if frame == "amarok":
         if check_if_exist(amarok_boss_head) == 1:
             return "amarok_boss_head"
-        elif check_if_exist(amarok_boss_dead) == 1:
+        else:
+            return 0
+
+    if frame == "amarok_2":
+        if check_if_exist(amarok_boss_dead) == 1:
             return "amarok_dead"
         else:
             return 0
@@ -205,6 +210,10 @@ def check_screen(frame):
             return "menu_swap_players"
         else:
             return 0
+
+    if frame == "efv_2":
+        if check_if_exist(rsc_efv_rope) == 1:
+            return "efv_rope"
 # zbieranie infromacji
 while True:
     try:

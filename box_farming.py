@@ -268,7 +268,7 @@ def box_farming(iterations):
             print("DropRatio : 0 %")
         else:
             print("DropRatio : " + str(round(float(succeful / i) * 100)) + " %")
-        print("Time : " + str(round(float(laczny_czas / 60))) + " mins")
+
         print("Sredni czas na operacje : " + (str(float(round(laczny_czas / (i+1))))) + "s")
 
 

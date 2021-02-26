@@ -4,7 +4,7 @@ from pynput.mouse import Controller, Button
 
 from init import check_screen, char1, char2, char3, char4, char5, login_start, afk_claim, items, eq_slotbar1, \
     eq_slotbar2, eq_slotbar3, eq_slotbar4, eq_slotbar5, starting_cords, menu, menu_swap_players, \
-    menu_swap_players_player_menu
+    menu_swap_players_player_menu, chrome_clear_site_data, tutorial_login_button, chrome_refresh
 
 mouse = Controller()
 
@@ -96,6 +96,7 @@ def mouse_click_double(pos, button, delay):
         mouse.click(Button.right)
     time.sleep(delay)
 
+
 def mouse_loot_swing(target_left, target_right):
     """
     :param target_left:  target start position , one dimensional array that sould be taken from init
@@ -112,9 +113,10 @@ def mouse_loot_swing(target_left, target_right):
     mouse.release(Button.left)
 
 
-def interface_eq_find_item(item):
+def interface_eq_find_item(item, bags):
     """
     :param item: item that function is looking for, check names in init
+    :param bags: bag slots
     :return: returns cords of mouse if successfully, returns False if not
     """
     mouse.position = (items[0], items[1])
@@ -128,7 +130,8 @@ def interface_eq_find_item(item):
         print("amarok_key" + "Found at slotbar 1")
         cords = check_screen("eq")[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
-
+    if bags == 1:
+        return False
 
     mouse.position = (eq_slotbar2[0], eq_slotbar2[1])
     mouse.click(Button.left)
@@ -137,7 +140,8 @@ def interface_eq_find_item(item):
         print(item + "Found at slotbar 2")
         cords = check_screen("eq")[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
-
+    if bags == 2:
+        return False
 
     mouse.position = (eq_slotbar3[0], eq_slotbar3[1])
     mouse.click(Button.left)
@@ -146,7 +150,8 @@ def interface_eq_find_item(item):
         print(item + "Found at slotbar 3")
         cords = check_screen("eq")[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
-    time.sleep(1)
+    if bags == 3:
+        return False
 
     mouse.position = (eq_slotbar4[0], eq_slotbar4[1])
     mouse.click(Button.left)
@@ -155,6 +160,8 @@ def interface_eq_find_item(item):
         print(item + "Found at slotbar 4")
         cords = check_screen("eq")[1]
         return cords[0] + starting_cords[0], cords[1] + starting_cords[1]
+    if bags == 4:
+        return False
 
     mouse.position = (eq_slotbar5[0], eq_slotbar5[1])
     mouse.click(Button.left)
@@ -166,6 +173,7 @@ def interface_eq_find_item(item):
 
     return False
 
+
 def interface_eq_use_item(cords):
     """
     :param cords: cordinates of an item
@@ -174,6 +182,7 @@ def interface_eq_use_item(cords):
     mouse.press(Button.left)
     time.sleep(1)
     mouse.release(Button.left)
+
 
 def game_get_to_main_menu():
     mouse.position = (menu[0], menu[1])
@@ -204,13 +213,40 @@ def game_get_to_main_menu():
         time.sleep(0.5)
 
 
-
 def misc_wait_for_frame(cat, target):
     while True:
-        print(check_screen(cat))
+        print(check_screen(cat), cat, target)
         if check_screen(cat) == target:
             break
         time.sleep(0.5)
 
 
+def game_reset():
+    # czyszczenie pamięci i odswiezanie strony
+    mouse.position = (chrome_clear_site_data[0], chrome_clear_site_data[1])
+    mouse.click(Button.left)
+    time.sleep(2)
+    mouse.click(Button.left)
+    time.sleep(2)
+    mouse.click(Button.left)
+    time.sleep(2)
 
+    mouse.position = (chrome_refresh[0], chrome_refresh[1])
+    mouse.click(Button.left)
+
+    tries = 0
+    while True:
+        print(check_screen("interface"), "interface", "tutorial_login ", tries)
+        if check_screen("interface") == "tutorial_login":
+            break
+        time.sleep(0.5)
+        tries = tries + 1
+        if (tries > 55):
+            print("Something went wrong , reseting back")
+            return False
+
+    time.sleep(1)  # offset ładowania
+
+    mouse.position = (tutorial_login_button[0], tutorial_login_button[1])
+    mouse.click(Button.left)
+    return True
