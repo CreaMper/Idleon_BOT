@@ -1,11 +1,9 @@
 import time
-
 from pynput.mouse import Controller, Button
-
-from init import check_screen, char1, char2, char3, char4, char5, login_start, afk_claim, items, eq_slotbar1, \
-    eq_slotbar2, eq_slotbar3, eq_slotbar4, eq_slotbar5, starting_cords, menu, menu_swap_players, \
-    menu_swap_players_player_menu, chrome_clear_site_data, tutorial_login_button, chrome_refresh
-
+from positions import *
+from init import *
+from resources import check_screen
+from positions import *
 mouse = Controller()
 
 
@@ -227,7 +225,7 @@ def misc_wait_for_frame(cat, target):
 
 
 def game_reset():
-    # czyszczenie pamięci i odswiezanie strony
+    # Storage clearing and refreshing
     mouse.position = (chrome_clear_site_data[0], chrome_clear_site_data[1])
     mouse.click(Button.left)
     time.sleep(2)
@@ -250,7 +248,7 @@ def game_reset():
             print("Something went wrong , reseting back")
             return False
 
-    time.sleep(1)  # offset ładowania
+    time.sleep(1)  # loading offset
 
     mouse.position = (tutorial_login_button[0], tutorial_login_button[1])
     mouse.click(Button.left)
