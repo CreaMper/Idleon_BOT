@@ -214,7 +214,7 @@ def misc_wait_for_frame(target):
     :return:
     """
     while True:
-        print("Looking for ", + target)
+        print("Looking for " + str(target))
         if check_screen(target) == target:
             break
         time.sleep(0.5)
@@ -235,7 +235,7 @@ def game_reset():
 
     tries = 0
     while True:
-        print("Waiting for tutorial to load ( " + tries + " )")
+        print("Waiting for tutorial to load ( " + str(tries) + " )")
         if check_screen("main_menu_tutorial_login") == "main_menu_tutorial_login":
             break
         time.sleep(0.5)

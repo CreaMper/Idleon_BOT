@@ -15,8 +15,9 @@ def calculate_obj_in_view_position(x, y):
     char1 = (x + 64, y + 407)  # 1st char
     char2 = (x + 194, y + 407)  # 2nd char
     char3 = (x + 328, y + 407)  # 3rd char
-    char4 = (x + 588, y + 407)  # 4th char
-    char5 = (x + 714, y + 407)  # 5th char
+    char4 = (x + 459, y + 407)  # 4th char
+    char5 = (x + 589, y + 407)  # 5th char
+    char6 = (x + 714, y + 407)  # 6th char
     login_start = (x + 924, y + 404)  # start
 
     # misc
