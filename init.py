@@ -33,7 +33,7 @@ while True:
         # if keyboard.is_pressed('p'):  # if key 'q' is pressed
         print('Got starting position')
         # cords = Mouse().queryMousePosition()
-        starting_cords = [176, 315]
+        starting_cords = [176, 317]
         calculate_obj_in_view_position(starting_cords[0], starting_cords[1])
         break
     except:

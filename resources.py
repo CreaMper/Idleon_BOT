@@ -15,11 +15,10 @@ def check_screen(frame):
     screenshot_cv2 = cv2.cvtColor(np.array(screenshot), cv2.COLOR_BGR2RGB)
 
     # Settings and misc
-    threshold = .85
+    threshold = .90
 
     # Function that check if theres an targeted obj in frame
     global click
-    threshold = .85
     click = (0, 0)
 
     def check_if_exist(resource):

@@ -5,6 +5,7 @@ global eq_slotbar1, eq_slotbar2, eq_slotbar3, eq_slotbar4, eq_slotbar5
 global EFV_rope, EFV_przejscie_do_obolka, EFV_przejscie_do_amaroks_villa
 global amarok_enter, amarok_click_kill, amarok_loot_change_position, amarok_loot_left, amarok_loot_right
 global JB_spawn, JB_sprawn_loot_left, JB_sprawn_loot_right
+global SM_spawn_loot_left, SM_spawn_loot_right
 
 
 def calculate_obj_in_view_position(x, y):
@@ -64,3 +65,8 @@ def calculate_obj_in_view_position(x, y):
     JB_spawn = (x + 672, y + 351)
     JB_sprawn_loot_left = (x + 637, y + 350)
     JB_sprawn_loot_right = (x + 725, y + 355)
+
+    # Spore Meadows SM
+    global SM_spawn_loot_left, SM_spawn_loot_right
+    SM_spawn_loot_left = (x + 659, y + 114)
+    SM_spawn_loot_right = (x + 783, y + 114)
