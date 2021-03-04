@@ -4,6 +4,7 @@ from positions import *
 from init import *
 from resources import check_screen
 from positions import *
+
 mouse = Controller()
 
 
@@ -217,15 +218,18 @@ def misc_wait_for_frame(target):
     while True:
         print("Looking for " + str(target))
         tries = tries + 1
-        print(check_screen(target)[0])
-        if check_screen(target)[0] == target:
-            return True
-        time.sleep(0.5)
-        if tries > 40:
-            print("Can't find " + str(target))
-            return False
+        try:
+            if check_screen(target)[0] == target:
+                return True, check_screen(target)[1]
+            time.sleep(0.5)
+            if tries > 40:
+                print("Can't find " + str(target))
+                return False, (0, 0)
+        except(TypeError):
+            continue
 
-def misc_wait_for_frame_and_click_on_it(target):
+
+def misc_wait_for_frame_and_click_on_it(target, delay):
     """
     :param target: what to looking for
     :return:
@@ -234,13 +238,21 @@ def misc_wait_for_frame_and_click_on_it(target):
     while True:
         print("Looking for " + str(target))
         tries = tries + 1
-        if check_screen(target)[0] == target:
+        try:
+            if check_screen(target)[0] == target:
+                found_obj_cords = check_screen(target)[1]
+                break
+            time.sleep(0.5)
+            if tries > 40:
+                print("Can't find " + str(target))
+                return False
+        except(TypeError):
+            found_obj_cords = (0, 0)
+            continue
 
-            return True
-        time.sleep(0.5)
-        if tries > 40:
-            print("Can't find " + str(target))
-            return False
+    mouse.position = (starting_cords[0] + found_obj_cords[0], starting_cords[1] + found_obj_cords[1])
+    mouse.click(Button.left)
+    time.sleep(delay)
 
 
 def game_reset():

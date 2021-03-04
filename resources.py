@@ -53,6 +53,7 @@ def check_screen(frame):
 
     # MINIGAMES
     rsc_minigame_play_button = cv2.imread("resources/images/interface/minigames/minigame_play_game.png")
+    rsc_minigame_wood_leaf = cv2.imread("resources/images/interface/minigames/wood/minigame_wood_leaf.png")
 
     # LOCATIONS
     # WORLD 1
@@ -70,6 +71,7 @@ def check_screen(frame):
     # WORLD 2
     # JAR BRIDGE
     rsc_loc_w2_jb_map_name = cv2.imread("resources/images/map_names/jar_bridge.png")
+
 
     # Checking for objects
     # INTERFACE
@@ -108,6 +110,10 @@ def check_screen(frame):
     # MINIGAMES
     if frame == "minigame_play_button":
         if check_if_exist(rsc_minigame_play_button):
+            return frame, click
+
+    if frame == "minigame_wood_leaf":
+        if check_if_exist(rsc_minigame_wood_leaf):
             return frame, click
 
     # LOCATIONS
