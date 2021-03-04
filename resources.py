@@ -51,6 +51,9 @@ def check_screen(frame):
     rsc_main_menu_main_stats = cv2.imread("resources/images/interface/main_menu/main_stats.png")
     rsc_main_menu_tutorial_login = cv2.imread("resources/images/interface/main_menu/tutorial_log_in.png")
 
+    # MINIGAMES
+    rsc_minigame_play_button = cv2.imread("resources/images/interface/minigames/minigame_play_game.png")
+
     # LOCATIONS
     # WORLD 1
 
@@ -72,35 +75,40 @@ def check_screen(frame):
     # INTERFACE
     if frame == "iface_afk_gain_button":
         if check_if_exist(rsc_iface_afk_gain_button):
-            return frame
+            return frame, click
     if frame == "iface_menu_bar_half":
         if check_if_exist(rsc_iface_menu_bar_half):
-            return frame
+            return frame, click
     if frame == "iface_menu_swap_players":
         if check_if_exist(rsc_iface_menu_swap_players):
-            return frame
+            return frame, click
     if frame == "iface_menu_swap_players_player_menu":
         if check_if_exist(rsc_iface_menu_swap_players_player_menu):
-            return frame
+            return frame, click
 
     # SKILLS
     if frame == "skill_present_on":
         if check_if_exist(rsc_skill_present_on):
-            return frame
+            return frame, click
     if frame == "skill_present_off":
         if check_if_exist(rsc_skill_present_off):
-            return frame
+            return frame, click
 
     # MAIN MENU
     if frame == "main_menu_play_button":
         if check_if_exist(rsc_main_menu_play_button):
-            return frame
+            return frame, click
     if frame == "main_menu_main_stats":
         if check_if_exist(rsc_main_menu_main_stats):
-            return frame
+            return frame, click
     if frame == "main_menu_tutorial_login":
         if check_if_exist(rsc_main_menu_tutorial_login):
-            return frame
+            return frame, click
+
+    # MINIGAMES
+    if frame == "minigame_play_button":
+        if check_if_exist(rsc_minigame_play_button):
+            return frame, click
 
     # LOCATIONS
     # WORLD 1
@@ -108,13 +116,13 @@ def check_screen(frame):
     # AMAROK'S VILLA
     if frame == "loc_w1_av":
         if check_if_exist(rsc_loc_w1_av):
-            return frame
+            return frame, click
     if frame == "loc_w1_av_amarok_head":
         if check_if_exist(rsc_loc_w1_av_amarok_head):
-            return frame
+            return frame, click
     if frame == "loc_w1_av_amarok_dead":
         if check_if_exist(rsc_loc_w1_av_amarok_dead):
-            return frame
+            return frame, click
     if frame == "loc_w1_av_amarok_key":
         if check_if_exist(rsc_loc_w1_av_amarok_key):
             return frame, click
@@ -124,15 +132,15 @@ def check_screen(frame):
     # ENCROACHING FORES VILLAS
     if frame == "loc_w1_efv_map_name":
         if check_if_exist(rsc_loc_w1_efv_map_name):
-            return frame
+            return frame, click
     if frame == "loc_w1_efv_upper_rope":
         if check_if_exist(rsc_loc_w1_efv_upper_rope):
-            return frame
+            return frame, click
 
     # WORLD 2
     # JAR BRIDGE
     if frame == "loc_w2_jb_map_name":
         if check_if_exist(rsc_loc_w2_jb_map_name):
-            return frame
+            return frame, click
 
     return False
