@@ -1,3 +1,5 @@
+import os
+
 from moves import *
 
 # settings
@@ -14,7 +16,9 @@ def start(iterations):
         loop_start = time.time()
 
         # wait for character selection frame
-        misc_wait_for_frame("main_menu_play_button")
+        if not misc_wait_for_frame("main_menu_play_button"):
+            game_reset()
+            continue
         time.sleep(2)  # loading offset
 
         # click on proper character slot
@@ -58,15 +62,17 @@ def start(iterations):
 
         end = time.time()
         time_overall = time_overall + (end - loop_start)
+        cls = lambda: os.system('cls')
+        cls()
         # Stats ------------------------------------------------------
         print("Try " + str(i + 1) + "/" + str(iterations))
         print("Successfully : " + str(successful))
         if successful == 0:
             print("Drop Ratio : 0%")
         else:
-            print("Drop Ratio :" + str(round(float(successful / (i + 1))) * 100) + "%")
+            print("Drop Ratio :" + str(round(float(successful / (i + 1))) * 100) + "% TAK")
         print("Run time : " + str(round((end - loop_start))) + "s")
         print("Avg run time : " + (str(round(float(time_overall / (i + 1))))) + "s")
         print("Bot uptime : " + str(round(float(time_overall / 60))) + "m")
 
-start(2)
+start(200009)

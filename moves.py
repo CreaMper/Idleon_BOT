@@ -213,11 +213,17 @@ def misc_wait_for_frame(target):
     :param target: what to looking for
     :return:
     """
+    tries = 0
     while True:
         print("Looking for " + str(target))
+        tries = tries + 1
         if check_screen(target) == target:
-            break
+            return True
         time.sleep(0.5)
+        if tries > 40:
+            print("Can't find " + str(target))
+            return False
+
 
 
 def game_reset():
